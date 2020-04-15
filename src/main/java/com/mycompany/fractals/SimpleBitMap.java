@@ -26,8 +26,6 @@ public class SimpleBitMap extends JPanel implements ActionListener{
     private double maxV = 2;
     private final double centerU = (double) ((this.maxU + this.minU) / 2);
     private final double centerV = (double) ((this.maxV + this.minV) / 2);
-    private final int ITERATIONS = 100;
-    private final double MAGNITUDE = 4.0;
     
     public SimpleBitMap() {
         Timer timer = new Timer(30, this);
