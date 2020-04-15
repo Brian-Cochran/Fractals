@@ -13,8 +13,8 @@ import javax.swing.Timer;
 
 public class SimpleBitMap extends JPanel implements ActionListener{
 
-    private static final int BITMAP_WIDTH = 512;
-    private static final int BITMAP_HEIGHT = 512;
+    private static final int BITMAP_WIDTH = 475;
+    private static final int BITMAP_HEIGHT = 500;
     private final BufferedImage image;
     private final double minX = 0;
     private final double maxX = BITMAP_WIDTH - 1;
@@ -22,11 +22,11 @@ public class SimpleBitMap extends JPanel implements ActionListener{
     private final double maxY = BITMAP_HEIGHT - 1;    
     private double minU = -2;
     private double maxU = 1;
-    private double minV = -0.9;
-    private double maxV = 2.1;
+    private double minV = -0.88;
+    private double maxV = 2.12;
     
     public SimpleBitMap() {
-        Timer timer = new Timer(50, this);
+        Timer timer = new Timer(20, this);
         timer.start();
         
         int w = BITMAP_WIDTH;
@@ -53,14 +53,8 @@ public class SimpleBitMap extends JPanel implements ActionListener{
     }// checkPoint(Complex c)
     
     public int[] chooseColor(int value) {
-        if (value < 10) {
-            int[] color = {0, 0, 0};
-            return color;
-        } // if
-        else {
-            int[] color = {0, 5 * value, 0};
-            return color;
-        } // else
+        int[] color = {value / 2, value * 2, value};
+        return color;
     } // chooseColor(int)
     
     public void paintComponent(Graphics g) {
@@ -94,5 +88,4 @@ public class SimpleBitMap extends JPanel implements ActionListener{
         this.minV = this.minV + (double) ((this.maxV - this.minV) / 150);
         this.repaint();
     } // actionPreformed(ActionEvent)
-    
 } // SimpleBitMap
