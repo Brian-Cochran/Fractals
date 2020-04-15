@@ -35,11 +35,11 @@ public class Complex {
     
     public Complex multiply(Complex c) {
         double newReal = (this.getReal() * c.getReal()) - (this.getImaginary() * c.getImaginary());
-        double newImaginary = (this.getReal() * c.getImaginary()) - (this.getImaginary() * c.getReal());
+        double newImaginary = (this.getReal() * c.getImaginary()) + (this.getImaginary() * c.getReal());
         return new Complex(newReal, newImaginary);
     } // multiply(Complex)
     
-    public double magnitude() {
-        return Math.sqrt((this.getReal() * this.getReal()) + (this.getImaginary() * this.getImaginary()));
-    } // magnitude()
+    public double magnitudeSqr() {
+        return ((this.getReal() * this.getReal()) + (this.getImaginary() * this.getImaginary()));
+    } // magnitudeSqr()
 } // Complex
