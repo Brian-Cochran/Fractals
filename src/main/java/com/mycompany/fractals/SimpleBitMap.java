@@ -3,31 +3,36 @@ package com.mycompany.fractals;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
-public class SimpleBitMap extends JPanel {
+public class SimpleBitMap extends JPanel implements ActionListener{
 
     private static final int BITMAP_WIDTH = 512;
     private static final int BITMAP_HEIGHT = 512;
     private BufferedImage image;
-
     private final double minX = 0;
     private final double maxX = BITMAP_WIDTH - 1;
     private final double minY = 0;
     private final double maxY = BITMAP_HEIGHT - 1;    
-
-    private final double minU = -1.3;
-    private final double maxU = -0.2;
-    private final double minV = -1.3;
-    private final double maxV = -0.2;
-
-    private final int MAX_ITERATIONS = 100;
+    private double minU = -2;
+    private double maxU = 1;
+    private double minV = -1;
+    private double maxV = 2;
+    private final double centerU = (double) ((this.maxU + this.minU) / 2);
+    private final double centerV = (double) ((this.maxV + this.minV) / 2);
+    private final int ITERATIONS = 100;
     private final double MAGNITUDE = 4.0;
     
     public SimpleBitMap() {
+        Timer timer = new Timer(30, this);
+        timer.start();
+        
         int w = BITMAP_WIDTH;
         int h = BITMAP_HEIGHT;
         int imageType = BufferedImage.TYPE_INT_RGB;
@@ -42,9 +47,10 @@ public class SimpleBitMap extends JPanel {
 
     public int checkPoint(Complex c) {
         Complex z = new Complex(0, 0);
-        int count = -1;
-        while(z.magnitudeSquared() < MAGNITUDE && count < MAX_ITERATIONS) {
-            z = c.add(z.multiply(z));
+        int count = 0;
+        while(z.magnitudeSquared() < 4 && count < 100) {
+            z = z.multiply(z);
+            z = z.add(c);
             count++;
         }// while
         return count;
@@ -56,7 +62,7 @@ public class SimpleBitMap extends JPanel {
             return color;
         } // if
         else {
-            int[] color = {0, 255, 0};
+            int[] color = {0, 5 * value, 0};
             return color;
         } // else
     } // chooseColor(int)
@@ -83,4 +89,14 @@ public class SimpleBitMap extends JPanel {
         }// for
         g2D.drawImage(image, scale, this);
     }// paintComponent(Graphics)
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        this.maxU = this.maxU - ((double) ((Math.abs(this.maxU) + Math.abs(this.centerU)) / 500));
+        this.minU = this.minU + ((double) ((Math.abs(this.minU) + Math.abs(this.centerU)) / 500));
+        this.maxV = this.maxV - ((double) ((Math.abs(this.maxV) + Math.abs(this.centerV)) / 500));
+        this.minV = this.minV + ((double) ((Math.abs(this.minV) + Math.abs(this.centerV)) / 500));
+        this.repaint();
+    } // actionPreformed(ActionEvent)
+    
 } // SimpleBitMap
