@@ -15,20 +15,18 @@ public class SimpleBitMap extends JPanel implements ActionListener{
 
     private static final int BITMAP_WIDTH = 512;
     private static final int BITMAP_HEIGHT = 512;
-    private BufferedImage image;
+    private final BufferedImage image;
     private final double minX = 0;
     private final double maxX = BITMAP_WIDTH - 1;
     private final double minY = 0;
     private final double maxY = BITMAP_HEIGHT - 1;    
     private double minU = -2;
     private double maxU = 1;
-    private double minV = -1;
-    private double maxV = 2;
-    private final double centerU = (double) ((this.maxU + this.minU) / 2);
-    private final double centerV = (double) ((this.maxV + this.minV) / 2);
+    private double minV = -0.9;
+    private double maxV = 2.1;
     
     public SimpleBitMap() {
-        Timer timer = new Timer(30, this);
+        Timer timer = new Timer(50, this);
         timer.start();
         
         int w = BITMAP_WIDTH;
@@ -90,10 +88,10 @@ public class SimpleBitMap extends JPanel implements ActionListener{
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.maxU = this.maxU - ((double) ((Math.abs(this.maxU) + Math.abs(this.centerU)) / 500));
-        this.minU = this.minU + ((double) ((Math.abs(this.minU) + Math.abs(this.centerU)) / 500));
-        this.maxV = this.maxV - ((double) ((Math.abs(this.maxV) + Math.abs(this.centerV)) / 500));
-        this.minV = this.minV + ((double) ((Math.abs(this.minV) + Math.abs(this.centerV)) / 500));
+        this.maxU = this.maxU - (double) ((this.maxU - this.minU) / 150);
+        this.minU = this.minU + (double) ((this.maxU - this.minU) / 150);
+        this.maxV = this.maxV - (double) ((this.maxV - this.minV) / 150);
+        this.minV = this.minV + (double) ((this.maxV - this.minV) / 150);
         this.repaint();
     } // actionPreformed(ActionEvent)
     
